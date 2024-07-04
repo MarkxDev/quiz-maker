@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, FC } from 'react';
+import { BaseSyntheticEvent, FC, useState } from 'react';
 import { IQuestion } from '../../models/questions.model';
 import Question from '../Question/Question';
 import './QuizMakerViewer.css';
@@ -7,11 +7,27 @@ interface QuizMakerViewerProps { questions: IQuestion[] }
 
 const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions } : QuizMakerViewerProps) => {
 
+  let [currentAnswers, setCurrentAnswers] = useState<{ [propName: string]: string }>({})
+
+  function handleAnswers(question: string, answer: string) {
+    let updatedCurrentAnswers;
+    if(answer){
+      updatedCurrentAnswers = {...currentAnswers, [question]: answer };
+    } else {
+      updatedCurrentAnswers = { ...currentAnswers };
+      delete updatedCurrentAnswers[question];
+    }
+    setCurrentAnswers(updatedCurrentAnswers);
+  }
+
+  // useEffect(()=>{
+  //   console.log('[QuizMakerViewer.handleAnswers] currentAnswers: ', currentAnswers);
+  //   console.log('[QuizMakerViewer.handleAnswers] currentAnswers length: ', Object.entries(currentAnswers).length); 
+  // })
+
   function handleSubmit(e: BaseSyntheticEvent) {
     e.preventDefault();
-    console.log('[QuizMakerViewer.handleSubmit] e.target: ', e.target.getElementsByTagName('input'));
-    const data = new FormData(e.target);
-    console.log('[QuizMakerViewer.handleSubmit] formData: ', data);
+    console.log('[QuizMakerViewer.handleSubmit] currentAnswers: ', currentAnswers);
   }
 
   return (
@@ -20,13 +36,20 @@ const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions } : QuizMakerView
 
         <div> 
           {questions ? questions.map( (q, index) => 
-            <Question key={index} question={q} ></Question>
+            <Question 
+              key={index} 
+              question={q}
+              onAnswerSelection={handleAnswers}
+            ></Question>
           ) : []}
         </div>
-
-        <button id="submitAnswersBtn" type="submit">
-           Submit
-        </button>
+          {
+            Object.entries(currentAnswers).length === 5 ?
+            <button id="submitAnswersBtn" type="submit">
+              Submit
+            </button> 
+            : ''
+          }
       </form>
 
     </div>

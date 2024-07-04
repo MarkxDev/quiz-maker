@@ -11,10 +11,8 @@ const QuizMakerForm: FC<QuizMakerFormProps> = ( { cartegoriesResource, onSubmit 
 
   function handleSubmit(e: BaseSyntheticEvent) {
     e.preventDefault();
-    console.log('You clicked submit.: ', e);
     const category = e.target[0].value;
     const difficulty = e.target[1].value;
-    console.log('[] category: ', category, ' difficulty: ', difficulty);
     onSubmit(category, difficulty);
   }
 

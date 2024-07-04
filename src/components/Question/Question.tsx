@@ -1,17 +1,19 @@
-import React, { FC } from 'react';
-import './Question.css';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { FC } from 'react';
 import { IQuestion } from '../../models/questions.model';
+import './Question.css';
 
-interface QuestionProps { question: IQuestion }
+interface QuestionProps { question: IQuestion, onAnswerSelection: (question: string, answer: string)=>void }
 
-const Question: FC<QuestionProps> = ( { question }: QuestionProps ) => {
-   const [answer, setAnswer] = React.useState<string>('');
+const Question: FC<QuestionProps> = ( { question, onAnswerSelection }: QuestionProps ) => {
 
-  const handleAlignment = (
+  const [answer, setAnswer] = React.useState<string>('');
+
+  const handleAnswer = (
     event: React.MouseEvent<HTMLElement>,
     newAnswer: string,
   ) => {
+    onAnswerSelection(question.question, newAnswer);
     setAnswer(newAnswer);
   };
 
@@ -21,16 +23,15 @@ const Question: FC<QuestionProps> = ( { question }: QuestionProps ) => {
       <ToggleButtonGroup
         value={answer}
         exclusive
-        onChange={handleAlignment}
-        aria-label="text alignment"
+        onChange={handleAnswer}
+        aria-label="text answer"
       >
-        {question ? [...question.incorrect_answers, question.correct_answer].map( (a, index) => 
+        {question ? question.all_answers!.map( (a, index) => 
           <ToggleButton key={index} value={a} aria-label="left aligned">
             {a}
           </ToggleButton> 
         ) : []}
       </ToggleButtonGroup>
-      <input type="hidden" id={question.question} name={question.question} value={answer} />
     </div>
   );
 };

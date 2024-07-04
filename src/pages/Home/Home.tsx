@@ -1,36 +1,31 @@
 import { FC, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import QuizMakerForm from '../../components/QuizMakerForm/QuizMakerForm';
-import { ICategoryResource } from '../../models/category.model';
-import './Home.css';
 import { getQuestions } from '../../api';
-import { IQuestion } from '../../models/questions.model';
+import QuizMakerForm from '../../components/QuizMakerForm/QuizMakerForm';
 import QuizMakerViewer from '../../components/QuizMakerViewer/QuizMakerViewer';
+import { ICategoryResource } from '../../models/category.model';
+import { IQuestion } from '../../models/questions.model';
+import { shuffle } from '../../util';
+import './Home.css';
 
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
 
   const cartegoriesResource = useLoaderData() as ICategoryResource;
-  console.log('[Home] cartegoriesResource: ', cartegoriesResource);
 
-  let [ questions, setQuestions ] = useState([]); 
+  let [ questions, setQuestions ] = useState<IQuestion[]>([]);
 
   function handleSubmit(category:number,difficulty:string) {
-    console.log('[Home.handleSubmit] category: ', category, ' difficulty: ', difficulty);
     getQuestions(category, difficulty)
     .then((response)=>{
       return response.json()
     })
     .then((data)=>{
-      console.log('[Home.handleSubmit] response data: ', data);
-      setQuestions(data.results);
+      const questionsTmp = (data.results as IQuestion[]).map(q => ({...q, all_answers: shuffle([...q.incorrect_answers, q.correct_answer])}) );
+      setQuestions( questionsTmp );
     });
   }
-
-  // useEffect(()=>{
-  //   console.log('[Home.useEffect] cartegoriesResource: ', cartegoriesResource);
-  // },[cartegories]);
 
   return (
     <div className="Home" data-testid="Home">
