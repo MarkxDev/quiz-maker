@@ -2,16 +2,20 @@ import { BaseSyntheticEvent, FC, ReactNode } from 'react';
 import { ICategoryResource } from '../../models/category.model';
 import './QuizMakerForm.css';
 
-interface QuizMakerFormProps {cartegoriesResource: ICategoryResource }
+interface QuizMakerFormProps {
+  cartegoriesResource: ICategoryResource, 
+  onSubmit: (category:number, difficulty:string) => void 
+}
 
-const QuizMakerForm: FC<QuizMakerFormProps> = ( { cartegoriesResource }: QuizMakerFormProps ) => {
+const QuizMakerForm: FC<QuizMakerFormProps> = ( { cartegoriesResource, onSubmit }: QuizMakerFormProps ) => {
 
   function handleSubmit(e: BaseSyntheticEvent) {
     e.preventDefault();
     console.log('You clicked submit.: ', e);
     const category = e.target[0].value;
     const difficulty = e.target[1].value;
-    console.log('category: ', category, ' difficulty: ', difficulty)
+    console.log('[] category: ', category, ' difficulty: ', difficulty);
+    onSubmit(category, difficulty);
   }
 
   let categorySelectOptions: ReactNode[] = cartegoriesResource.trivia_categories.map((category, index)=> <option key={index} value={category.id}>{category.name}</option> );
