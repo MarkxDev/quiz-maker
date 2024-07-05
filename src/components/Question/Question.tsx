@@ -3,9 +3,9 @@ import React, { FC } from 'react';
 import { IQuestion } from '../../models/questions.model';
 import './Question.css';
 
-interface QuestionProps { question: IQuestion, onAnswerSelection: (question: string, answer: string)=>void }
+interface QuestionProps { question: IQuestion, onAnswerSelection?: (question: string, answer: string)=>void, disabled: boolean }
 
-const Question: FC<QuestionProps> = ( { question, onAnswerSelection }: QuestionProps ) => {
+const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled }: QuestionProps ) => {
 
   const [answer, setAnswer] = React.useState<string>('');
 
@@ -13,7 +13,9 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection }: QuestionP
     event: React.MouseEvent<HTMLElement>,
     newAnswer: string,
   ) => {
-    onAnswerSelection(question.question, newAnswer);
+    if(onAnswerSelection) {
+      onAnswerSelection(question.question, newAnswer);
+    }
     setAnswer(newAnswer);
   };
 
@@ -25,6 +27,7 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection }: QuestionP
         exclusive
         onChange={handleAnswer}
         aria-label="text answer"
+        disabled={disabled}
       >
         {question ? question.all_answers!.map( (a, index) => 
           <ToggleButton key={index} value={a} aria-label="left aligned">

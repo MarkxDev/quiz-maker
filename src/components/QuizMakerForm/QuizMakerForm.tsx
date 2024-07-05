@@ -20,7 +20,6 @@ const QuizMakerForm: FC<QuizMakerFormProps> = ( { cartegoriesResource, onSubmit 
   return (
     <div className="QuizMakerForm">
       <div className="well">
-        <h2>QUIZ MAKER</h2>
         <h4>Select category and difficulty:</h4>
         <form id="formCD" onSubmit={handleSubmit}>
           <select id="categorySelect">
