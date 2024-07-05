@@ -12,14 +12,14 @@ const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSe
       <div style={{marginTop: 15}}>
 
         <div> 
-          {questions ? questions.map( (q, index) => 
+          { questions ? questions.map( (q, index) => 
             <Question 
               key={index} 
               question={q}
               onAnswerSelection={onAnswerSelection}
               disabled={mode === 'VIEW'}
             ></Question>
-          ) : []}
+            ) : []}
         </div>
       </div>
 
