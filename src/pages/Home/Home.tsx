@@ -43,7 +43,7 @@ const Home: FC<HomeProps> = () => {
     <div className="Home" data-testid="Home">
       <h2>QUIZ MAKER</h2>
       <QuizMakerForm cartegoriesResource={cartegoriesResource} onSubmit={handleSubmit}></QuizMakerForm>
-      <QuizMakerViewer questions={questions} mode="EDIT" onAnswerSelection={handleAnswers}></QuizMakerViewer>
+      <QuizMakerViewer questions={questions} mode="EDIT" onAnswerSelection={handleAnswers} currentAnswers={currentAnswers}></QuizMakerViewer>
       {
         Object.entries(currentAnswers).length === 5 ?
         <Link id="submitAnswersLink" to="/results" state={{currentAnswers, questions}}>

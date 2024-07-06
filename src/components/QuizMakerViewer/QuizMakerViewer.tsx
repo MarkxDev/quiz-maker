@@ -3,9 +3,14 @@ import { IQuestion } from '../../models/questions.model';
 import Question from '../Question/Question';
 import './QuizMakerViewer.css';
 
-interface QuizMakerViewerProps { questions: IQuestion[], mode: 'EDIT' | 'VIEW', onAnswerSelection?: (question: string, answer: string)=>void }
+interface QuizMakerViewerProps { 
+  questions: IQuestion[], 
+  mode: 'EDIT' | 'VIEW', 
+  onAnswerSelection?: (question: string, answer: string)=>void,
+  currentAnswers: { [propName: string]: string }
+}
 
-const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSelection  } : QuizMakerViewerProps) => {
+const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSelection, currentAnswers } : QuizMakerViewerProps) => {
 
   return (
     <div className="QuizMakerViewer">
@@ -16,6 +21,7 @@ const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSe
             <Question 
               key={index} 
               question={q}
+              answer={currentAnswers[q.question] ?? ''}
               onAnswerSelection={onAnswerSelection}
               disabled={mode === 'VIEW'}
             ></Question>
