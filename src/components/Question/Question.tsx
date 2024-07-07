@@ -40,12 +40,18 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled, a
 
   function getToggleButton(a: string, index: number) {
     return disabled ?  (
-      <ToggleButton key={index} value={a} selected={getToggleButtonSelection(a)} color={getToggleButtonColor(a)} aria-label="left aligned">
-        {a}
-      </ToggleButton> )
-    : (
-      <ToggleButton key={index} value={a} aria-label="left aligned">
-        {a}
+      <ToggleButton key={index} value={a} 
+        selected={getToggleButtonSelection(a)} 
+        color={getToggleButtonColor(a)} 
+        aria-label="left aligned" 
+      >
+        <div dangerouslySetInnerHTML={{__html: a}}></div>
+      </ToggleButton> 
+    ) : (
+      <ToggleButton key={index} value={a} 
+        aria-label="left aligned" 
+      >
+        <div dangerouslySetInnerHTML={{__html: a}}></div>
       </ToggleButton> 
     );
   }

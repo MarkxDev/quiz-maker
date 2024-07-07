@@ -31,7 +31,7 @@ const Home: FC<HomeProps> = () => {
   function handleSubmit(category:number,difficulty:string) {
     getQuestions(category, difficulty)
     .then((data)=>{
-      const questionsTmp = (data.results as IQuestion[]).map(q => ({...q, all_answers: shuffle([...q.incorrect_answers, q.correct_answer])}) );
+      const questionsTmp = (data.results as IQuestion[])?.map(q => ({...q, all_answers: shuffle([...q.incorrect_answers, q.correct_answer])}) );
       setQuestions( questionsTmp );
     });
   }
