@@ -18,7 +18,7 @@ function App() {
       path: "/results",
       element: <Result />
     },
-  ]);
+  ], { basename: '/quiz-maker' });
 
   return (
     <div className="App">
