@@ -9,7 +9,7 @@ interface ResultProps {}
 const Result: FC<ResultProps> = () => {
   const location = useLocation();
 
-  function countCorrectAnswers() {
+  function countCorrectAnswers(): number {
     let count = 0;
     const answers = (location.state.currentAnswers as {[propName: string]: string});
     for(let question of location.state.questions as IQuestion[]) {
@@ -21,13 +21,28 @@ const Result: FC<ResultProps> = () => {
     return count;
   }
 
+  function getScoreColor(): string {
+    const score = countCorrectAnswers();
+    let scoreCssClass = "";
+    if(score !== undefined){
+      if(score <= 1){
+        scoreCssClass = "red";
+      }else if( score === 2 || score === 3 ){
+        scoreCssClass = "yellow";
+      } else {
+        scoreCssClass = "green";
+      }
+    }
+    return scoreCssClass;
+  }
+
   return (
     <div className="Result" data-testid="Result">
       <h2>QUIZ MAKER</h2>
       <h4>Results</h4>
       <QuizMakerViewer questions={location.state.questions} currentAnswers={location.state.currentAnswers} mode="VIEW" ></QuizMakerViewer>
 
-      <div>You scored {countCorrectAnswers()} out of 5</div>
+      <div className='score-bar' style={{backgroundColor: getScoreColor()}}>You scored {countCorrectAnswers()} out of 5</div>
 
       <Link id="submitAnswersBtn" to="/">
         <button id="submitAnswersBtn">

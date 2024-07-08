@@ -1,1 +1,8 @@
-.Result {}
+.Result {
+    padding: 50px 20px;
+}
+
+.Result .score-bar {
+    margin: 20px 25%;
+    padding: 5px;
+}

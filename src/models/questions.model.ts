@@ -1,8 +1,3 @@
-export interface IQuestionResponce {
-  response_code: number,
-  results: IQuestion[]
-}
-
 export interface IQuestion {
   category: string,
   type: string,
@@ -13,7 +8,6 @@ export interface IQuestion {
   all_answers?: string[]
 }
 
-
-export type QuestionView = IQuestion & { answers: string[] };
-export type QuizEndData = QuestionView & { selected_answer: string };
-export type ResultView = { quizEndData: QuizEndData[], score?: number };
+export interface IAnswers { 
+  [propName: string]: string 
+}

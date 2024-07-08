@@ -1,1 +1,7 @@
-.Question {}
+.Question {
+    margin-bottom: 10px;
+}
+
+.Question .question-label {
+    margin-bottom: 5px;
+}

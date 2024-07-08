@@ -57,8 +57,8 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled, a
   }
 
   return (
-    <div className="Question" style={{marginBottom: 10}}>
-      <div style={{marginBottom: 5}} dangerouslySetInnerHTML={{__html: question.question}}></div>
+    <div className="Question">
+      <div className='question-label' dangerouslySetInnerHTML={{__html: question.question}}></div>
       <ToggleButtonGroup
         value={answer}
         exclusive
