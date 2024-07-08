@@ -4,7 +4,7 @@ import { getQuestions } from '../../api';
 import QuizMakerForm from '../../components/QuizMakerForm/QuizMakerForm';
 import QuizMakerViewer from '../../components/QuizMakerViewer/QuizMakerViewer';
 import { ICategoryResource } from '../../models/category.model';
-import { IQuestion } from '../../models/questions.model';
+import { IAnswers, IQuestion } from '../../models/questions.model';
 import { shuffle } from '../../util';
 import './Home.css';
 
@@ -15,9 +15,9 @@ const Home: FC<HomeProps> = () => {
   const cartegoriesResource = useLoaderData() as ICategoryResource;
 
   let [ questions, setQuestions ] = useState<IQuestion[]>([]);
-  let [currentAnswers, setCurrentAnswers] = useState<{ [propName: string]: string }>({})
+  let [currentAnswers, setCurrentAnswers] = useState<IAnswers>({})
 
-  function handleAnswers(question: string, answer: string) {
+  function handleAnswers(question: string, answer: string): void {
     let updatedCurrentAnswers;
     if(answer){
       updatedCurrentAnswers = {...currentAnswers, [question]: answer };
@@ -28,7 +28,7 @@ const Home: FC<HomeProps> = () => {
     setCurrentAnswers(updatedCurrentAnswers);
   }
 
-  function handleSubmit(category:number,difficulty:string) {
+  function handleSubmit(category:number,difficulty:string): void {
     getQuestions(category, difficulty)
     .then((data)=>{
       if(data) {
