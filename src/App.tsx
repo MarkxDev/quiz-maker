@@ -10,12 +10,12 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/quiz-maker",
       element: <Home />,
       loader: getCategories
     },
     {
-      path: "/results",
+      path: "quiz-maker/results",
       element: <Result />
     },
   ]);
