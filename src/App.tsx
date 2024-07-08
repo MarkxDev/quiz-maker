@@ -10,15 +10,15 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/quiz-maker",
+      path: "/",
       element: <Home />,
       loader: getCategories
     },
     {
-      path: "quiz-maker/results",
+      path: "/results",
       element: <Result />
     },
-  ]);
+  ], { basename: '/quiz-maker' });
 
   return (
     <div className="App">
