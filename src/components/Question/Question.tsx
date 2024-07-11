@@ -5,19 +5,18 @@ import './Question.css';
 
 interface QuestionProps { 
   question: IQuestion, 
-  onAnswerSelection?: (question: string, answer: string)=>void, 
-  disabled: boolean,
-  answer: string
+  onAnswerSelection?: (questionId: number, answer: string)=>void, 
+  disabled: boolean
 }
 
-const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled, answer }: QuestionProps ) => {
+const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled }: QuestionProps ) => {
 
   const handleAnswer = (
     event: MouseEvent<HTMLElement>,
     newAnswer: string,
   ) => {
     if(!disabled && onAnswerSelection) {
-      onAnswerSelection(question.question, newAnswer);
+      onAnswerSelection(question.id, newAnswer);
     }
   };
 
@@ -25,14 +24,14 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled, a
     if (currentAnswer === question.correct_answer) {
       return 'success';
     }
-    if (currentAnswer === answer) {
+    if (currentAnswer === question.current_answer) {
       return 'error';
     }
     return 'standard';
   }
 
   function getToggleButtonSelection(currentAnswer: string): boolean {
-    if(currentAnswer === question.correct_answer || currentAnswer === answer) {
+    if(currentAnswer === question.correct_answer || currentAnswer === question.current_answer) {
       return true;
     }
     return false;
@@ -60,7 +59,7 @@ const Question: FC<QuestionProps> = ( { question, onAnswerSelection, disabled, a
     <div className="Question">
       <div className='question-label' dangerouslySetInnerHTML={{__html: question.question}}></div>
       <ToggleButtonGroup
-        value={answer}
+        value={question.current_answer}
         exclusive
         onChange={handleAnswer}
         aria-label="text answer"

@@ -1,16 +1,15 @@
 import { FC } from 'react';
-import { IAnswers, IQuestion } from '../../models/questions.model';
+import { IQuestion } from '../../models/questions.model';
 import Question from '../Question/Question';
 import './QuizMakerViewer.css';
 
 interface QuizMakerViewerProps { 
   questions: IQuestion[], 
   mode: 'EDIT' | 'VIEW', 
-  onAnswerSelection?: (question: string, answer: string)=>void,
-  currentAnswers: IAnswers
+  onAnswerSelection?: (questionId: number, answer: string)=>void
 }
 
-const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSelection, currentAnswers } : QuizMakerViewerProps) => {
+const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSelection } : QuizMakerViewerProps) => {
 
   return (
     <div className="QuizMakerViewer">
@@ -18,7 +17,6 @@ const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSe
         <Question 
           key={index} 
           question={q}
-          answer={currentAnswers[q.question] ?? ''}
           onAnswerSelection={onAnswerSelection}
           disabled={mode === 'VIEW'}
         ></Question>

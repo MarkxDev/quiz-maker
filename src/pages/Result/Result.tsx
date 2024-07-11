@@ -11,10 +11,8 @@ const Result: FC<ResultProps> = () => {
 
   function countCorrectAnswers(): number {
     let count = 0;
-    const answers = (location.state.currentAnswers as {[propName: string]: string});
     for(let question of location.state.questions as IQuestion[]) {
-      const answer = answers[question.question];
-      if(answer && answer === question.correct_answer ){
+      if(question.current_answer === question.correct_answer){
         count++;
       }
     }
@@ -40,7 +38,7 @@ const Result: FC<ResultProps> = () => {
     <div className="Result" data-testid="Result">
       <h2>QUIZ MAKER</h2>
       <h4>Results</h4>
-      <QuizMakerViewer questions={location.state.questions} currentAnswers={location.state.currentAnswers} mode="VIEW" ></QuizMakerViewer>
+      <QuizMakerViewer questions={location.state.questions} mode="VIEW" ></QuizMakerViewer>
 
       <div className='score-bar' style={{backgroundColor: getScoreColor()}}>You scored {countCorrectAnswers()} out of 5</div>
 
