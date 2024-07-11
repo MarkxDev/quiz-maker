@@ -13,9 +13,9 @@ const QuizMakerViewer: FC<QuizMakerViewerProps> = ({ questions, mode, onAnswerSe
 
   return (
     <div className="QuizMakerViewer">
-      { questions ? questions.map( (q, index) => 
+      { questions ? questions.map((q) => 
         <Question 
-          key={index} 
+          key={q.id}
           question={q}
           onAnswerSelection={onAnswerSelection}
           disabled={mode === 'VIEW'}
